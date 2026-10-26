@@ -141,7 +141,7 @@ The NEXA prototype includes 21 wireframes covering the application's main screen
 - [UI Wireframes](docs/wireframes/)
 - [Navigation Map](docs/navigation-map.png)
 - [Style Guide](docs/style-guide.md)
-- [Figma Prototype]([PASTE_FIGMA_LINK_HERE](https://www.figma.com/design/kHE5HexxH6KgkDjKnfB4qH/NEXA-%E2%80%94-HCI-7-Mobile-Interfaces?node-id=25-34337&t=6MOkJVqnjmhGuqMG-0)
+- [Figma Prototype]([PASTE_FIGMA_LINK_HERE](https://www.figma.com/design/kHE5HexxH6KgkDjKnfB4qH/NEXA-%E2%80%94-HCI-7-Mobile-Interfaces?node-id=1-305&t=AZzmxsAwJhDWcodN-0)
 
 ### System Architecture
 
@@ -153,7 +153,14 @@ NEXA follows a planned three-layer architecture:
 
 The architecture uses Unidirectional Data Flow (UDF) to manage user events and UI state.
 
-- [Architecture Diagram](docs/architecture.png)
-- [Architecture Documentation](docs/architecture.md)
+- [Architecture Diagram and Documentation](docs/NEXA%20%E2%80%93%20App%20Architecture.pdf)
+
+### AI Use Documentation
+
+AI assistance used during project development and documentation is recorded in the AI Use Log.
+
+- [AI Use Log](docs/ai-use-log.md)
+
+---
 
 **NEXA – Where teamwork becomes organized.**

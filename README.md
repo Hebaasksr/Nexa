@@ -130,4 +130,30 @@ All AI-generated suggestions are reviewed, verified, and modified by team member
 This repository contains the development work and documentation for the NEXA mobile application.
 
 ---
+## Milestone 2 – UI/UX Design & System Architecture
+
+This milestone focuses on designing the NEXA user interface, defining the application navigation flow, and planning the system architecture using Jetpack Compose and Android Jetpack components.
+
+### UI/UX Design
+
+The NEXA prototype includes 21 wireframes covering the application's main screens, user interactions, and interface states.
+
+- [UI Wireframes](docs/wireframes/)
+- [Navigation Map](docs/navigation-map.png)
+- [Style Guide](docs/style-guide.md)
+- [Figma Prototype]([PASTE_FIGMA_LINK_HERE](https://www.figma.com/design/kHE5HexxH6KgkDjKnfB4qH/NEXA-%E2%80%94-HCI-7-Mobile-Interfaces?node-id=25-34337&t=6MOkJVqnjmhGuqMG-0)
+
+### System Architecture
+
+NEXA follows a planned three-layer architecture:
+
+- **UI Layer:** Jetpack Compose screens and ViewModels.
+- **Domain Layer:** Business logic, data models, and use cases.
+- **Data Layer:** Repositories, Firebase services, Room, and DataStore.
+
+The architecture uses Unidirectional Data Flow (UDF) to manage user events and UI state.
+
+- [Architecture Diagram](docs/architecture.png)
+- [Architecture Documentation](docs/architecture.md)
+
 **NEXA – Where teamwork becomes organized.**

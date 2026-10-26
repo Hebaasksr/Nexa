@@ -162,6 +162,17 @@ AI assistance used during project development and documentation is recorded in t
 
 - [AI Use Log](docs/ai-use-log.md)
 
+### Documentation Structure
+
+The `docs/` directory contains NEXA's Milestone 2 design and architecture documentation:
+
+- `wireframes/` – UI screen designs and interface states.
+- `navigation-map.png` – Application navigation flow.
+- `style-guide.md` – Colors, typography, spacing, and UI components.
+- `ai-use-log.md` – AI assistance documentation.
+- `NEXA – App Architecture.pdf` – System architecture diagram and explanation.
+
+
 ---
 
 **NEXA – Where teamwork becomes organized.**

@@ -141,8 +141,9 @@ The NEXA prototype includes 21 wireframes covering the application's main screen
 - [UI Wireframes](docs/wireframes/)
 - [Navigation Map](docs/navigation-map.png)
 - [Style Guide](docs/style-guide.md)
-- [Figma Prototype]([PASTE_FIGMA_LINK_HERE](https://www.figma.com/design/kHE5HexxH6KgkDjKnfB4qH/NEXA-%E2%80%94-HCI-7-Mobile-Interfaces?node-id=1-305&t=AZzmxsAwJhDWcodN-0)
+- [Figma Prototype](https://www.figma.com/design/kHE5HexxH6KgkDjKnfB4qH/NEXA-%E2%80%94-HCI-7-Mobile-Interfaces?node-id=1-305&t=AZzmxsAwJhDWcodN-0)
 
+  
 ### System Architecture
 
 NEXA follows a planned three-layer architecture:

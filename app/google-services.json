@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "75466155154",
+    "project_id": "nexa-8fbb1",
+    "storage_bucket": "nexa-8fbb1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:75466155154:android:49032a6f4007bcd490724b",
+        "android_client_info": {
+          "package_name": "sa.edu.iau.nexa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJZArFNpxM-OKrT_sJ3v7aYj1cQvhbfvI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

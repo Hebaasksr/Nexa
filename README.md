@@ -172,6 +172,40 @@ The `docs/` directory contains NEXA's Milestone 2 design and architecture docume
 - `ai-use-log.md` – AI assistance documentation.
 - `NEXA – App Architecture.pdf` – System architecture diagram and explanation.
 
+---
+## Milestone 3 – Android Application
+
+The Android Studio project is in the root of this repository (`app/` module).
+
+### Tech Stack
+
+- **Kotlin + Jetpack Compose** for all screens (no XML layouts), with Navigation Compose.
+- **ViewModel + StateFlow** for UI state (`NexaViewModel`).
+- **Firebase Authentication** for sign-up, sign-in and password reset (email and password).
+- **Cloud Firestore** for user profiles: a document is saved in `users/{uid}` when an account is created.
+- **Local storage (SharedPreferences + JSON)** for projects, tasks, comments, messages, notifications and settings (`NexaStore`).
+
+### Code Structure
+
+```
+app/src/main/java/sa/edu/iau/nexa/
+├── MainActivity.kt                 Activity entry point and navigation routes
+├── model/Models.kt                 Data classes (projects, tasks, members, files, notifications)
+├── data/NexaStore.kt               Local JSON storage
+├── viewmodel/NexaViewModel.kt      UI state, Firebase Auth and data actions
+└── ui/
+    ├── components/NexaComponents.kt   Shared Compose components
+    ├── screens/                       HomeScreens, FormScreens, WorkspaceScreens
+    └── theme/NexaTheme.kt             Colors and typography
+```
+
+### How to Run
+
+1. Clone the repository and open its root folder in Android Studio (**File → Open**).
+2. Use **JDK 17** and **Android SDK Platform 35**.
+3. Wait for Gradle sync to finish, then run the `app` configuration on an emulator (API 26 or higher) or an Android phone.
+
+`app/google-services.json` is included, so the app connects to the team's Firebase project without extra setup.
 
 ---
 

@@ -1,0 +1,20 @@
+# Gradle and build output
+.gradle/
+.kotlin/
+build/
+
+# Android Studio
+.idea/
+*.iml
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Packaged apps
+*.apk
+*.aab
+
+# OS files
+.DS_Store
+Thumbs.db

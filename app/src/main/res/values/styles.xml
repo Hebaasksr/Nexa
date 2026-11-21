@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NexaApp</string>
+    <style name="Theme.Nexa" parent="android:style/Theme.Material.NoActionBar">
+        <item name="android:windowBackground">#040514</item>
+        <item name="android:statusBarColor">#040514</item>
+        <item name="android:navigationBarColor">#040514</item>
+    </style>
+</resources>

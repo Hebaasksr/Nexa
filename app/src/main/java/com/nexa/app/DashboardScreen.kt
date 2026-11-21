@@ -65,10 +65,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import sa.edu.iau.cshj.project_m3.ui.theme.AccentCyan
-import sa.edu.iau.cshj.project_m3.ui.theme.DarkBackground
-import sa.edu.iau.cshj.project_m3.ui.theme.PrimaryPurple
-import sa.edu.iau.cshj.project_m3.ui.theme.Project_M3Theme
+
 
 private val DarkSurface = Color(0xFF191C3B)
 private val LightBodyBg = Color(0xFFF7F8FC)

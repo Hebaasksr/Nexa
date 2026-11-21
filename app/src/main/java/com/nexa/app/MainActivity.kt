@@ -69,24 +69,12 @@ private fun NexaApp(
         newItemSheet = true
     }
 
-    fun openTab(route: String) {
-        if (nav.currentDestination?.route == route) return
-
-        nav.navigate(route) {
-            popUpTo("home") {
-                saveState = true
-            }
-            launchSingleTop = true
-            restoreState = true
-        }
-    }
-
     val onTabSelected: (Int) -> Unit = { tab ->
         when (tab) {
-            0 -> openTab("home")
-            1 -> openTab("tasks")
-            3 -> openTab("calendar")
-            4 -> openTab("more")
+            0 -> nav.navigateToHomeTab()
+            1 -> nav.navigateToTaskList()
+            3 -> nav.navigateToCalendar()
+            4 -> nav.navigateToMore()
         }
     }
 
@@ -96,41 +84,41 @@ private fun NexaApp(
     Box(Modifier.fillMaxSize()) {
         NavHost(
             navController = nav,
-            startDestination = "home",
+            startDestination = AppRoutes.HOME,
         ) {
-            composable("home") {
+            composable(AppRoutes.HOME) {
                 HomeScreen(
                     onNavigateToProjectDetails = { projectId ->
-                        nav.navigate("project_detail/$projectId")
+                        nav.navigateToProjectDetails(projectId)
                     },
                     onNavigateToViewAllProjects = {
-                        nav.navigate("projects")
+                        nav.navigateToProjects()
                     },
                     onNavigateToCreateTask = onNew,
                     onNavigateToNotifications = {
-                        nav.navigate("notifications")
+                        nav.navigateToNotifications()
                     },
                     onNavigateToMessages = {
-                        nav.navigate("chats")
+                        nav.navigateToChats()
                     },
                     onTabSelected = onTabSelected,
                     onOpenSearch = {
-                        nav.navigate("search")
+                        nav.navigateToSearch()
                     },
                 )
             }
 
-            composable("tasks") {
+            composable(AppRoutes.TASKS) {
                 MyTasksScreen(
                     tasks = tasks,
                     onAdd = {
-                        nav.navigate("task_new")
+                        nav.navigateToNewTask()
                     },
                     onDetails = { taskId ->
-                        nav.navigate("task/$taskId")
+                        nav.navigateToTaskDetails(taskId)
                     },
                     onEdit = { taskId ->
-                        nav.navigate("task_edit/$taskId")
+                        nav.navigateToEditTask(taskId)
                     },
                     onDelete = { taskId ->
                         deletingTaskId = taskId
@@ -139,10 +127,10 @@ private fun NexaApp(
                     onTabSelected = onTabSelected,
                     onNew = onNew,
                     onNotifications = {
-                        nav.navigate("notifications")
+                        nav.navigateToNotifications()
                     },
                     onMessages = {
-                        nav.navigate("chats")
+                        nav.navigateToChats()
                     },
                     onBack = {
                         nav.popBackStack()
@@ -150,7 +138,7 @@ private fun NexaApp(
                 )
             }
 
-            composable("task_new") {
+            composable(AppRoutes.TASK_NEW) {
                 AddEditTaskScreen(
                     task = null,
                     projects = projectNames,
@@ -158,7 +146,7 @@ private fun NexaApp(
                     onSave = { fields ->
                         tasksViewModel.save(null, fields).also { saved ->
                             if (saved) {
-                                openTab("tasks")
+                                nav.navigateToTaskList()
                                 scope.launch {
                                     snackbar.showSnackbar("Task created")
                                 }
@@ -173,8 +161,8 @@ private fun NexaApp(
                 )
             }
 
-            composable("task_edit/{taskId}") { entry ->
-                val taskId = entry.arguments?.getString("taskId")
+            composable(AppRoutes.TASK_EDIT) { entry ->
+                val taskId = entry.arguments?.getString(AppRoutes.TASK_ID_ARGUMENT)
                 val task = tasks.firstOrNull { it.id == taskId }
 
                 if (task != null) {
@@ -201,8 +189,8 @@ private fun NexaApp(
                 }
             }
 
-            composable("task/{taskId}") { entry ->
-                val taskId = entry.arguments?.getString("taskId")
+            composable(AppRoutes.TASK_DETAILS) { entry ->
+                val taskId = entry.arguments?.getString(AppRoutes.TASK_ID_ARGUMENT)
                 val task = tasks.firstOrNull { it.id == taskId }
 
                 if (task != null) {
@@ -212,7 +200,7 @@ private fun NexaApp(
                             nav.popBackStack()
                         },
                         onEdit = {
-                            nav.navigate("task_edit/${task.id}")
+                            nav.navigateToEditTask(task.id)
                         },
                         onDelete = {
                             deletingTaskId = task.id
@@ -235,17 +223,17 @@ private fun NexaApp(
                 }
             }
 
-            composable("calendar") {
+            composable(AppRoutes.CALENDAR) {
                 CalendarScreen(
                     onCreateTaskClick = onNew,
                     onNotificationsClick = {
-                        nav.navigate("notifications")
+                        nav.navigateToNotifications()
                     },
                     onTabSelected = onTabSelected,
                 )
             }
 
-            composable("search") {
+            composable(AppRoutes.SEARCH) {
                 SearchScreen(
                     onCreateTaskClick = onNew,
                     onBackClick = {
@@ -258,7 +246,7 @@ private fun NexaApp(
                 )
             }
 
-            composable("notifications") {
+            composable(AppRoutes.NOTIFICATIONS) {
                 NotificationsScreen(
                     onCreateTaskClick = onNew,
                     onBackClick = {
@@ -268,14 +256,14 @@ private fun NexaApp(
                 )
             }
 
-            composable("projects") {
+            composable(AppRoutes.PROJECTS) {
                 ProjectsScreen(
                     projects = state.projects,
                     onOpenProject = { projectId ->
-                        nav.navigate("project_detail/$projectId")
+                        nav.navigateToProjectDetails(projectId)
                     },
                     onAddProject = {
-                        nav.navigate("project_new")
+                        nav.navigateToNewProject()
                     },
                     onTabSelected = onTabSelected,
                     onNew = onNew,
@@ -285,7 +273,7 @@ private fun NexaApp(
                 )
             }
 
-            composable("project_new") {
+            composable(AppRoutes.PROJECT_NEW) {
                 AddEditProjectScreen(
                     project = null,
                     onSave = { fields ->
@@ -299,8 +287,8 @@ private fun NexaApp(
                         )
 
                         if (saved != null) {
-                            nav.navigate("project_detail/${saved.id}") {
-                                popUpTo("project_new") {
+                            nav.navigateToProjectDetails(saved.id) {
+                                popUpTo(AppRoutes.PROJECT_NEW) {
                                     inclusive = true
                                 }
                             }
@@ -316,8 +304,8 @@ private fun NexaApp(
                 )
             }
 
-            composable("project_edit/{projectId}") { entry ->
-                val projectId = entry.arguments?.getString("projectId")
+            composable(AppRoutes.PROJECT_EDIT) { entry ->
+                val projectId = entry.arguments?.getString(AppRoutes.PROJECT_ID_ARGUMENT)
                 val project = state.projects.firstOrNull { it.id == projectId }
 
                 if (project != null) {
@@ -348,8 +336,8 @@ private fun NexaApp(
                 }
             }
 
-            composable("project_detail/{projectId}") { entry ->
-                val projectId = entry.arguments?.getString("projectId")
+            composable(AppRoutes.PROJECT_DETAILS) { entry ->
+                val projectId = entry.arguments?.getString(AppRoutes.PROJECT_ID_ARGUMENT)
                 val project = state.projects.firstOrNull { it.id == projectId }
 
                 if (project != null) {
@@ -359,16 +347,16 @@ private fun NexaApp(
                             nav.popBackStack()
                         },
                         onEdit = {
-                            nav.navigate("project_edit/${project.id}")
+                            nav.navigateToEditProject(project.id)
                         },
                         onOpenTasks = {
-                            openTab("tasks")
+                            nav.navigateToTaskList()
                         },
                         onOpenFiles = {
-                            nav.navigate("files")
+                            nav.navigateToFiles()
                         },
                         onOpenTeam = {
-                            nav.navigate("team")
+                            nav.navigateToTeam()
                         },
                         onTabSelected = onTabSelected,
                         onNew = onNew,
@@ -376,7 +364,7 @@ private fun NexaApp(
                 }
             }
 
-            composable("files") {
+            composable(AppRoutes.FILES) {
                 FilesScreen(
                     onBack = {
                         nav.popBackStack()
@@ -386,79 +374,79 @@ private fun NexaApp(
                 )
             }
 
-            composable("more") {
+            composable(AppRoutes.MORE) {
                 MoreScreen(
                     onProjects = {
-                        nav.navigate("projects")
+                        nav.navigateToProjects()
                     },
                     onTeam = {
-                        nav.navigate("team")
+                        nav.navigateToTeam()
                     },
                     onFiles = {
-                        nav.navigate("files")
+                        nav.navigateToFiles()
                     },
                     onMessages = {
-                        nav.navigate("chats")
+                        nav.navigateToChats()
                     },
                     onNotifications = {
-                        nav.navigate("notifications")
+                        nav.navigateToNotifications()
                     },
                     onProfile = {
-                        nav.navigate("profile_settings")
+                        nav.navigateToProfileSettings()
                     },
                     onTabSelected = onTabSelected,
                     onNew = onNew,
                 )
             }
 
-            composable("profile_settings") {
+            composable(AppRoutes.PROFILE_SETTINGS) {
                 ProfileSettingsScreen(
                     onBack = {
                         nav.popBackStack()
                     },
                     onResetPassword = {
-                        nav.navigate("reset_password")
+                        nav.navigateToResetPassword()
                     },
                     onSignOut = {
-                        openTab("login")
+                        nav.navigateToLogin()
                     },
                     onDeleteAccount = {
-                        openTab("login")
+                        nav.navigateToLogin()
                     },
                 )
             }
 
-            composable("login") {
+            composable(AppRoutes.LOGIN) {
                 AuthFlowScreen(AuthMode.Login) {
-                    openTab("home")
+                    nav.navigateToHomeTab()
                 }
             }
 
-            composable("signup") {
+            composable(AppRoutes.SIGNUP) {
                 AuthFlowScreen(AuthMode.SignUp) {
-                    openTab("home")
+                    nav.navigateToHomeTab()
                 }
             }
 
-            composable("reset_password") {
+            composable(AppRoutes.RESET_PASSWORD) {
                 AuthFlowScreen(AuthMode.ResetPassword) {
                     nav.popBackStack()
                 }
             }
 
-            composable("team") {
+            composable(AppRoutes.TEAM) {
                 TeamScreen(
                     members = state.members,
                     invitations = state.invitations,
                     projects = state.projects,
                     onInvite = {
-                        nav.navigate("invite_member")
+                        nav.navigateToInviteMember()
                     },
                     onChats = {
-                        nav.navigate("chats")
+                        nav.navigateToChats()
                     },
                     onProjectChat = { project ->
-                        nav.navigate("chat/${project.id}")
+                        nav.navigateToProjectChat(project.id)
                     },
                     onRevoke = viewModel::revoke,
                     onTabSelected = onTabSelected,
@@ -469,7 +457,7 @@ private fun NexaApp(
                 )
             }
 
-            composable("invite_member") {
+            composable(AppRoutes.INVITE_MEMBER) {
                 InviteMemberScreen(
                     memberCount = state.members.size,
                     projects = state.projects,
@@ -480,7 +468,7 @@ private fun NexaApp(
                 )
             }
 
-            composable("chats") {
+            composable(AppRoutes.CHATS) {
                 ChatListScreen(
                     projects = state.projects,
                     messages = state.messages,
@@ -488,13 +476,13 @@ private fun NexaApp(
                         nav.popBackStack()
                     },
                     onProjectClick = { project ->
-                        nav.navigate("chat/${project.id}")
+                        nav.navigateToProjectChat(project.id)
                     },
                 )
             }
 
-            composable("chat/{projectId}") { entry ->
-                val projectId = entry.arguments?.getString("projectId")
+            composable(AppRoutes.PROJECT_CHAT) { entry ->
+                val projectId = entry.arguments?.getString(AppRoutes.PROJECT_ID_ARGUMENT)
                 val project = state.projects.firstOrNull { it.id == projectId }
 
                 if (project != null) {
@@ -506,7 +494,7 @@ private fun NexaApp(
                             nav.popBackStack()
                         },
                         onMembers = {
-                            openTab("team")
+                            nav.navigateToTeam()
                         },
                         onSend = { body, attachment ->
                             viewModel.send(project.id, body, attachment)
@@ -532,13 +520,13 @@ private fun NexaApp(
             },
             onTask = {
                 newItemSheet = false
-                nav.navigate("task_new") {
+                nav.navigateToNewTask {
                     launchSingleTop = true
                 }
             },
             onProject = {
                 newItemSheet = false
-                nav.navigate("project_new") {
+                nav.navigateToNewProject {
                     launchSingleTop = true
                 }
             },
@@ -554,7 +542,7 @@ private fun NexaApp(
             onConfirm = {
                 deletingTaskId = null
 
-                if (nav.currentDestination?.route == "task/{taskId}") {
+                if (nav.currentDestination?.route == AppRoutes.TASK_DETAILS) {
                     nav.popBackStack()
                 }
 
